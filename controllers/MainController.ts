@@ -17,7 +17,9 @@ export class MainController {
 
     public async getUser(req: Request, res: Response) {
         try {
-            return res.status(200).json({ status: "OK", code: 200, message: "success", data: req.params.id })
+            let data = await prisma.user.findUnique({ where: { id: Number(req.params.id) } })
+
+            return res.status(200).json({ status: "OK", code: 200, message: "success", data: data })
         } catch (error: any) {
             return res.status(500).json({ status: "ERROR", code: 500, message: error.message })
         }
