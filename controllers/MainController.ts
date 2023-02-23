@@ -1,16 +1,21 @@
+import { PrismaClient } from "@prisma/client"
 import { Request, Response } from "express"
+
+let prisma = new PrismaClient()
 
 export class MainController {
 
-    public getUsers(req: Request, res: Response) {
+    public async getUsers(req: Request, res: Response) {
         try {
-            return res.status(200).json({ status: "OK", code: 200, message: "success" })
+            let data = await prisma.user.findMany()
+
+            return res.status(200).json({ status: "OK", code: 200, data: data })
         } catch (error: any) {
             return res.status(500).json({ status: "ERROR", code: 500, message: error.message })
         }
     }
 
-    public getUser(req: Request, res: Response) {
+    public async getUser(req: Request, res: Response) {
         try {
             return res.status(200).json({ status: "OK", code: 200, message: "success", data: req.params.id })
         } catch (error: any) {
