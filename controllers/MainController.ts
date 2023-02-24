@@ -5,7 +5,7 @@ let prisma = new PrismaClient()
 
 export class MainController {
 
-    public async getUsers(req: Request, res: Response) {
+    public async getUsers(req: Request, res: Response): Promise<Response> {
         try {
             let data = await prisma.user.findMany()
 
@@ -15,7 +15,7 @@ export class MainController {
         }
     }
 
-    public async getUser(req: Request, res: Response) {
+    public async getUser(req: Request, res: Response): Promise<Response> {
         try {
             let data = await prisma.user.findUnique({ where: { id: Number(req.params.id) } })
 
